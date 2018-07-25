@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		142835DC20FED6C900599EDF /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 142835DB20FED6C900599EDF /* AppDelegate.m */; };
-		142835DF20FED6C900599EDF /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 142835DE20FED6C900599EDF /* ViewController.m */; };
 		142835E220FED6C900599EDF /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 142835E020FED6C900599EDF /* Main.storyboard */; };
 		142835E420FED6CA00599EDF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 142835E320FED6CA00599EDF /* Assets.xcassets */; };
 		142835E720FED6CA00599EDF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 142835E520FED6CA00599EDF /* LaunchScreen.storyboard */; };
@@ -29,14 +28,17 @@
 		1428362820FED76600599EDF /* TRSSystemInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 1428361620FED76600599EDF /* TRSSystemInfo.m */; };
 		1428362920FED76600599EDF /* UIWindow+TRS.m in Sources */ = {isa = PBXBuildFile; fileRef = 1428361820FED76600599EDF /* UIWindow+TRS.m */; };
 		1428362A20FED76600599EDF /* TRSKeyChainStore2.m in Sources */ = {isa = PBXBuildFile; fileRef = 1428361920FED76600599EDF /* TRSKeyChainStore2.m */; };
+		1428363521006F8D00599EDF /* ViewControllerOne.m in Sources */ = {isa = PBXBuildFile; fileRef = 1428363421006F8D00599EDF /* ViewControllerOne.m */; };
+		1428363821006FCF00599EDF /* MainTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1428363721006FCF00599EDF /* MainTableViewController.m */; };
+		1428363B210071EC00599EDF /* ViewControllerTwo.m in Sources */ = {isa = PBXBuildFile; fileRef = 1428363A210071EC00599EDF /* ViewControllerTwo.m */; };
+		1428365B2100774400599EDF /* Foundation+Log.m in Sources */ = {isa = PBXBuildFile; fileRef = 1428365A2100774400599EDF /* Foundation+Log.m */; };
+		148296B721017569001183B9 /* TRSNetworkManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 148296B621017569001183B9 /* TRSNetworkManager.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		142835D720FED6C900599EDF /* TRSAnalytics.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TRSAnalytics.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		142835DA20FED6C900599EDF /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		142835DB20FED6C900599EDF /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		142835DD20FED6C900599EDF /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
-		142835DE20FED6C900599EDF /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
 		142835E120FED6C900599EDF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		142835E320FED6CA00599EDF /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		142835E620FED6CA00599EDF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -75,6 +77,15 @@
 		1428361620FED76600599EDF /* TRSSystemInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TRSSystemInfo.m; sourceTree = "<group>"; };
 		1428361820FED76600599EDF /* UIWindow+TRS.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIWindow+TRS.m"; sourceTree = "<group>"; };
 		1428361920FED76600599EDF /* TRSKeyChainStore2.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TRSKeyChainStore2.m; sourceTree = "<group>"; };
+		1428363321006F8D00599EDF /* ViewControllerOne.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewControllerOne.h; sourceTree = "<group>"; };
+		1428363421006F8D00599EDF /* ViewControllerOne.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewControllerOne.m; sourceTree = "<group>"; };
+		1428363621006FCF00599EDF /* MainTableViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MainTableViewController.h; sourceTree = "<group>"; };
+		1428363721006FCF00599EDF /* MainTableViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MainTableViewController.m; sourceTree = "<group>"; };
+		14283639210071EC00599EDF /* ViewControllerTwo.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewControllerTwo.h; sourceTree = "<group>"; };
+		1428363A210071EC00599EDF /* ViewControllerTwo.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewControllerTwo.m; sourceTree = "<group>"; };
+		1428365A2100774400599EDF /* Foundation+Log.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Foundation+Log.m"; sourceTree = "<group>"; };
+		148296B521017569001183B9 /* TRSNetworkManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TRSNetworkManager.h; sourceTree = "<group>"; };
+		148296B621017569001183B9 /* TRSNetworkManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TRSNetworkManager.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -110,8 +121,13 @@
 				142835F020FED76600599EDF /* trs_ta_sdk */,
 				142835DA20FED6C900599EDF /* AppDelegate.h */,
 				142835DB20FED6C900599EDF /* AppDelegate.m */,
-				142835DD20FED6C900599EDF /* ViewController.h */,
-				142835DE20FED6C900599EDF /* ViewController.m */,
+				1428363621006FCF00599EDF /* MainTableViewController.h */,
+				1428363721006FCF00599EDF /* MainTableViewController.m */,
+				1428363321006F8D00599EDF /* ViewControllerOne.h */,
+				1428363421006F8D00599EDF /* ViewControllerOne.m */,
+				14283639210071EC00599EDF /* ViewControllerTwo.h */,
+				1428363A210071EC00599EDF /* ViewControllerTwo.m */,
+				1428365A2100774400599EDF /* Foundation+Log.m */,
 				142835E020FED6C900599EDF /* Main.storyboard */,
 				142835E320FED6CA00599EDF /* Assets.xcassets */,
 				142835E520FED6CA00599EDF /* LaunchScreen.storyboard */,
@@ -172,6 +188,8 @@
 			children = (
 				1428360120FED76600599EDF /* TRSHTTPManager.h */,
 				1428360020FED76600599EDF /* TRSHTTPManager.m */,
+				148296B521017569001183B9 /* TRSNetworkManager.h */,
+				148296B621017569001183B9 /* TRSNetworkManager.m */,
 			);
 			path = TRSSendMessageSever;
 			sourceTree = "<group>";
@@ -197,8 +215,8 @@
 			isa = PBXGroup;
 			children = (
 				1428360D20FED76600599EDF /* TRSCommen.h */,
-				1428361020FED76600599EDF /* TRSReachability2.m */,
 				1428361520FED76600599EDF /* TRSReachability2.h */,
+				1428361020FED76600599EDF /* TRSReachability2.m */,
 				1428361420FED76600599EDF /* TRSKeyChainStore2.h */,
 				1428361920FED76600599EDF /* TRSKeyChainStore2.m */,
 				1428361320FED76600599EDF /* TRSSystemInfo.h */,
@@ -279,15 +297,17 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				142835DF20FED6C900599EDF /* ViewController.m in Sources */,
 				142835EA20FED6CB00599EDF /* main.m in Sources */,
 				1428361C20FED76600599EDF /* TRSPageConfig.m in Sources */,
+				148296B721017569001183B9 /* TRSNetworkManager.m in Sources */,
 				1428361E20FED76600599EDF /* TRSManager.m in Sources */,
 				1428361A20FED76600599EDF /* TRSBaseModel.m in Sources */,
 				1428362920FED76600599EDF /* UIWindow+TRS.m in Sources */,
+				1428365B2100774400599EDF /* Foundation+Log.m in Sources */,
 				1428361F20FED76600599EDF /* TRSAnalytics.m in Sources */,
 				1428361D20FED76600599EDF /* TRSSystemEventConfig.m in Sources */,
 				1428361B20FED76600599EDF /* TRSEventModelConfig.m in Sources */,
+				1428363821006FCF00599EDF /* MainTableViewController.m in Sources */,
 				1428362A20FED76600599EDF /* TRSKeyChainStore2.m in Sources */,
 				1428362520FED76600599EDF /* TRSDefaultCache.m in Sources */,
 				1428362820FED76600599EDF /* TRSSystemInfo.m in Sources */,
@@ -295,7 +315,9 @@
 				1428362420FED76600599EDF /* TRSDBBase.m in Sources */,
 				142835DC20FED6C900599EDF /* AppDelegate.m in Sources */,
 				1428362020FED76600599EDF /* TRSHTTPManager.m in Sources */,
+				1428363521006F8D00599EDF /* ViewControllerOne.m in Sources */,
 				1428362120FED76600599EDF /* TRSDefaultCacheManager.m in Sources */,
+				1428363B210071EC00599EDF /* ViewControllerTwo.m in Sources */,
 				1428362220FED76600599EDF /* TRSDBManager3.m in Sources */,
 				1428362320FED76600599EDF /* TRSDBResultSet.m in Sources */,
 			);

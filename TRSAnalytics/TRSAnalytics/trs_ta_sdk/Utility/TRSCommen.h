@@ -31,8 +31,8 @@ TRS_EXTERN_C_BEGIN
  是否打印
  */
 #ifdef DEBUG
-#define TRSNSLog(FORMAT, ...) fprintf(stderr,"file__%s:%d\t%s\n",[[[NSString stringWithUTF8String:__FILE__] lastPathComponent] UTF8String], __LINE__, [[NSString stringWithFormat:FORMAT, ##__VA_ARGS__] UTF8String]);
-//#define TRSNSLog(...)
+//#define TRSNSLog(FORMAT, ...) fprintf(stderr,"file__%s:%d\t%s\n",[[[NSString stringWithUTF8String:__FILE__] lastPathComponent] UTF8String], __LINE__, [[NSString stringWithFormat:FORMAT, ##__VA_ARGS__] UTF8String]);
+#define TRSNSLog(...)
 #else
 #define TRSNSLog(...)
 #endif
@@ -244,9 +244,7 @@ static inline NSString* TRSDirectoryToString(NSDictionary *dic){
     NSData *jsonData = [NSJSONSerialization dataWithJSONObject:dic
                                                        options:NSJSONWritingPrettyPrinted
                                                          error:&error];
-    
     if (!jsonData) {
-//        NSLog(@"error: %@", error);
         return nil;
     } else {
         jsonString = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];

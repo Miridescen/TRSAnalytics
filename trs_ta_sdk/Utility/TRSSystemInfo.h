@@ -79,4 +79,7 @@
 
 /** 获取当前VC名称 */
 + (NSString *)currentVC;
+
+/** UUID 结合keychain当做手机的唯一标识*/
++ (NSString *)UUID;
 @end

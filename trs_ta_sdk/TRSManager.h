@@ -14,6 +14,8 @@
 #import "TRSReachability2.h"
 #import "TRSDBManager3.h"
 
+#import "TRSNetworkManager.h"
+
 #import "TRSCommen.h"
 typedef void (^TRSSendDataSuccess)(void);
 typedef void (^TRSSendDataFailure)(NSError *error);
@@ -29,11 +31,15 @@ typedef NS_ENUM(NSUInteger, TRSAppOpenType) {
     TRSDBManager3 *_DBManager3;
     TRSDefaultCacheManager *_defaultCacheManage;
     TRSHTTPManager *_HTTPManager;
+    
+    TRSNetworkManager *_networkManager;
 }
 
 @property (nonatomic, strong) TRSDefaultCacheManager *defaultCacheManage;
 @property (nonatomic, strong) TRSDBManager3 *DBManager3;
 @property (nonatomic, strong) TRSHTTPManager *HTTPManager;
+
+@property (nonatomic, strong) TRSNetworkManager *networkManager;
 
 @property (nonatomic, assign) UIBackgroundTaskIdentifier bgTask;
 
@@ -53,6 +59,7 @@ typedef NS_ENUM(NSUInteger, TRSAppOpenType) {
 @property (nonatomic, strong) NSArray *killPageEventArray2;
 
 @property (nonatomic, assign) BOOL logEnable;
+
 @property (nonatomic, assign) BOOL debugEnable;
 @property (nonatomic, assign) BOOL debugSuccess; // 发送debug模式是否成功
 
@@ -62,9 +69,6 @@ typedef NS_ENUM(NSUInteger, TRSAppOpenType) {
 @property (nonatomic, assign) BOOL hasUID; // 用于判断是否有用户信息
 @property (nonatomic, assign) BOOL hasSendUID; // 判断用户信息是否发送成功
 
-
-@property (nonatomic, assign) BOOL appActivitySuccess; // 用于判断是否走完activity通知，防止出现pv的appstarttime为0
-
 @property (nonatomic, copy) NSString *refer; // 上一个页面
 
 
@@ -72,12 +76,6 @@ typedef NS_ENUM(NSUInteger, TRSAppOpenType) {
 
 - (void)browsePageCountAdd; // 页面浏览次数自增一
 - (void)launchCountAdd; // 启动次数自增一
-
-- (void)sendPageEventWithDataArray:(NSArray *)dataArray; // 供页面结束时发送数据调用
-
-- (void)sendDebugPageEventWithDataArray:(NSArray *)dataArray; // debug模式下发送数据
-
-- (void)sendDebugStateDeviceMessage; // debug下发送设备信息
 
 - (void)sendUserInfo;
 

@@ -56,12 +56,8 @@
             NSError *error = [NSError errorWithDomain:NSMachErrorDomain code:-2 userInfo:nil];
             failure(error);
         } else {
-            if (error) {
-                failure(error);
-            } else {
-                NSError *error = [[NSError alloc] init];
-                failure(error);
-            }
+            NSError *error = [[NSError alloc] init];
+            failure(error);
         }
     }];
     [task resume];
@@ -156,6 +152,12 @@
     
     NSURLSession *session = [NSURLSession sharedSession];
     NSURLSessionDataTask *task = [session dataTaskWithRequest:request completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+        
+        if (error) {
+            failure(error);
+            return;
+        }
+        
         NSString *str = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
         if ([str isEqualToString:@"ok"]) {
             success(response);
@@ -180,6 +182,7 @@
             failure(error);
             return;
         }
+        
         NSDictionary *dataDic = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
         
         NSNumber *code = dataDic[@"code"];

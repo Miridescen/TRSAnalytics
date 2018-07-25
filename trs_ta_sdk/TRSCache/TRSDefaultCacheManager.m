@@ -9,7 +9,6 @@
 #import "TRSDefaultCacheManager.h"
 #import "TRSSystemInfo.h"
 #import "TRSDefaultCache.h"
-#import "TRSGetUUID2.h"
 
 #define kTRSDefaultCache ([TRSDefaultCache sharedManage])
 @interface TRSDefaultCacheManager()
@@ -45,7 +44,7 @@
                             @"ov"        :[TRSSystemInfo osVersion],
                             @"sv"        :[TRSSystemInfo sdkVersion],
                             @"tz"        :[TRSSystemInfo timeZone],
-                            @"UUID"      :[TRSGetUUID2 getUUID],
+                            @"UUID"      :[TRSSystemInfo UUID],
                             @"IDFA"      :[TRSSystemInfo IDFA]
                             } mutableCopy];
         [kTRSDefaultCache memoryDeviceInfoWitDictionary:_deviceInfoDic];
@@ -76,7 +75,7 @@
                         @"ov"        :[TRSSystemInfo osVersion],
                         @"sv"        :[TRSSystemInfo sdkVersion],
                         @"tz"        :[TRSSystemInfo timeZone],
-                        @"UUID"      :[TRSGetUUID2 getUUID],
+                        @"UUID"      :[TRSSystemInfo UUID],
                         @"IDFA"      :[TRSSystemInfo IDFA]
                         } mutableCopy];
     [kTRSDefaultCache memoryDeviceInfoWitDictionary:_deviceInfoDic];

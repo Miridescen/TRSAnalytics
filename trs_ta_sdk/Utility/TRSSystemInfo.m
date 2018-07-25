@@ -28,6 +28,14 @@
 
 #import <AdSupport/ASIdentifierManager.h>
 
+#import "TRSKeyChainStore2.h"
+
+#define  TRS_KEY_USERNAME_PASSWORD @"com.company.app.usernamepassword"
+#define  TRS_KEY_USERNAME @"com.company.app.username"
+#define  TRS_KEY_PASSWORD @"com.company.app.password"
+
+#import "TRSCommen.h"
+
 @implementation TRSSystemInfo
 /** APP名称 */
 + (NSString *)appName{
@@ -490,6 +498,18 @@
         return NSStringFromClass(viewController.class);
         
     }
+}
+
++ (NSString *)UUID{
+    NSString * UUIDStr = (NSString *)[TRSKeyChainStore2 load:@"com.company.app.usernamepassword"];
+    if (TRSBlankStr(UUIDStr))
+    {
+        CFUUIDRef uuidRef = CFUUIDCreate(kCFAllocatorDefault);
+        UUIDStr = (NSString *)CFBridgingRelease(CFUUIDCreateString (kCFAllocatorDefault,uuidRef));
+        [TRSKeyChainStore2 save:TRS_KEY_USERNAME_PASSWORD data:UUIDStr];
+        
+    }
+    return UUIDStr;
 }
 
 @end

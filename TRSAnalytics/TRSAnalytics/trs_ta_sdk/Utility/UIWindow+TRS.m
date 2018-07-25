@@ -8,8 +8,10 @@
 
 #import "UIWindow+TRS.h"
 #import "TRSManager.h"
+#import "TRSNetworkManager.h"
 
 #define kTRSManager  [TRSManager sharedManager]
+#define kTRSNetworkManager [TRSNetworkManager sharedManager]
 
 @implementation UIWindow (TRS)
 
@@ -26,7 +28,12 @@
 - (void)motionEnded:(UIEventSubtype)motion withEvent:(UIEvent *)event
 {
     if (kTRSManager.debugEnable && !kTRSManager.debugSuccess) {
-        [kTRSManager sendDebugStateDeviceMessage];
+        
+        [kTRSNetworkManager sendDebugStateDeviceMessageSuccess:^{
+            kTRSManager.debugSuccess = YES;
+        } failure:^(NSError *error) {
+            
+        }];
     }
 //    NSLog(@"摇动结束");
 }

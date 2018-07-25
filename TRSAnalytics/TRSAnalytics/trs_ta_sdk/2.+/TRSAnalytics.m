@@ -12,8 +12,12 @@
 #import "TRSPageConfig.h"
 #import "TRSEventModelConfig.h"
 #import "TRSBaseModel.h"
+#import "TRSNetworkManager.h"
+#import "TRSDBManager3.h"
 
 #define kTRSManager  [TRSManager sharedManager]
+#define kTRSNetworkManager [TRSNetworkManager sharedManager]
+#define kTRSDBManager [TRSDBManager3 sharedManager]
 
 @implementation TRSAnalytics
 
@@ -30,20 +34,14 @@
     [kTRSManager.defaultCacheManage memoryDeviceInfoWithKey:@"staticURL" value:staticURL];
     [kTRSManager.defaultCacheManage memoryDeviceInfoWithKey:@"deviceID" value:deviceID];
     [kTRSManager.defaultCacheManage memoryDeviceInfoWithKey:@"channel" value:channel];
-    if (attributes != nil && [attributes allKeys].count > 0) {
-        NSArray *keysArr = [attributes allKeys];
-        for (NSString *key in keysArr) {
-            if ([[key lowercaseString] isEqualToString:@"olddeviceid"]) {
-                [kTRSManager.defaultCacheManage memoryDeviceInfoWithKey:@"olddeviceid" value:[NSString stringWithFormat:@"%@", attributes[key]]];
-            }
-            if ([[key lowercaseString] isEqualToString:@"gxdeviceid"]) {
-                [kTRSManager.defaultCacheManage memoryDeviceInfoWithKey:@"gxdeviceid" value:[NSString stringWithFormat:@"%@", attributes[key]]];
-            }
+
+    [attributes enumerateKeysAndObjectsUsingBlock:^(id  _Nonnull key, id  _Nonnull obj, BOOL * _Nonnull stop) {
+
+        if ([[(NSString *)key lowercaseString] isEqualToString:@"gxdeviceid"] || [[(NSString *)key lowercaseString] isEqualToString:@"olddeviceid"]) {
+            [kTRSManager.defaultCacheManage memoryDeviceInfoWithKey:[(NSString *)key lowercaseString] value:[NSString stringWithFormat:@"%@", obj]];
         }
-    }
-    
-//    kTRSManager.runEnable = YES;
-    
+    }];
+  
 }
 
 + (void)setLogEnable:(BOOL)logEnable{
@@ -72,32 +70,17 @@
     kTRSManager.browsePageCount += 1;
     [kTRSManager browsePageCountAdd];
     
-    if (!kTRSManager.appActivitySuccess) {  // 该判断防止未初始玩就产生数据
-        if ([kTRSManager.appStartTime integerValue] == 0) {
-            kTRSManager.appStartTime = TRSCurrentTime();
-            [kTRSManager launchCountAdd];
-        }
-    }
-    
-    NSString *pvStr = [NSString stringWithFormat:@"%@_%@_%ld_%@_%@",
-                       TRSCurrentTime36radix(kTRSManager.appStartTime),
-                       [kTRSManager.defaultCacheManage deviceInfoWithKey:@"LaunchTotalCount"],
-                       (long)kTRSManager.browsePageCount,
-                       [kTRSManager.defaultCacheManage deviceInfoWithKey:@"PageVisitTotalCount"],
-                       [kTRSManager.defaultCacheManage deviceInfoWithKey:@"UUID"]];
     
     TRSPageConfig *pageConfig = [[TRSPageConfig alloc] init];
     pageConfig.pageName = pageName;
     pageConfig.pageBeginTime = TRSCurrentTime();
     pageConfig.vt = TRSCurrentTime36radix(pageConfig.pageBeginTime);
-    pageConfig.pv = pvStr;
     pageConfig.browsePageCount = kTRSManager.browsePageCount;
     if (!TRSBlankStr(kTRSManager.refer)) pageConfig.refer = kTRSManager.refer;
-    
-    [kTRSManager.pageConfigArray addObject:pageConfig];
-    
     kTRSManager.refer = pageName;
     
+    [kTRSManager.pageConfigArray addObject:pageConfig];
+   
 }
 + (void)pageEnd:(NSString *)pageName{
     [TRSAnalytics pageEnd:pageName properties:nil];
@@ -109,6 +92,14 @@
         for (TRSPageConfig *pageConfig in kTRSManager.pageConfigArray) { // 找到与其匹配的beginPage
             if ([pageConfig.pageName isEqualToString:pageName]) {
                 
+                NSString *pvStr = [NSString stringWithFormat:@"%@_%@_%ld_%@_%@",
+                                   TRSCurrentTime36radix(kTRSManager.appStartTime),
+                                   [kTRSManager.defaultCacheManage deviceInfoWithKey:@"LaunchTotalCount"],
+                                   (long)kTRSManager.browsePageCount,
+                                   [kTRSManager.defaultCacheManage deviceInfoWithKey:@"PageVisitTotalCount"],
+                                   [kTRSManager.defaultCacheManage deviceInfoWithKey:@"UUID"]];
+                
+                pageConfig.pv = pvStr;
                 pageConfig.pageEndTime = TRSCurrentTime();
                 pageBaseModel = [pageConfig configPageModelWith:properties];
                 [kTRSManager.pageConfigArray removeObject:pageConfig];
@@ -122,7 +113,8 @@
             return;
         } else {
             NSArray *debugEventArray = @[pageBaseModel];
-            [kTRSManager sendDebugPageEventWithDataArray:debugEventArray];
+            
+            [kTRSNetworkManager sendDebugDataWithDataArray:debugEventArray];
         }
         
     } else {
@@ -144,7 +136,31 @@
             [dataArray addObject:pageBaseModel];
         }
         
-        [kTRSManager sendPageEventWithDataArray:dataArray];
+        
+        kTRSManager.killPageEventArray2 = dataArray;
+        kTRSManager.killAppTagSendPageEvent2 = NO;
+        [kTRSNetworkManager sendDataWithWithDataArray:dataArray Success:^{
+            kTRSManager.killAppTagSendPageEvent2 = YES;
+            TRSNSLog(@"采集并发送%ld条pageEvent数据", (unsigned long)dataArray.count);
+            if (kTRSManager.logEnable) {
+                // model转字典
+                NSMutableArray *arr = [NSMutableArray array];
+                for (TRSBaseModel *model in dataArray) {
+                    NSDictionary *dic = TRSDataToDirectory(model.jsonData);
+                    if (dic) [arr addObject:dic];
+                }
+                NSLog(@"----------成功发送%ld条数据----------", (unsigned long)arr.count);
+                NSLog(@"%@", arr);
+            }
+        } failure:^(NSError *error) {
+            kTRSManager.killAppTagSendPageEvent2 = YES;
+            if ([kTRSDBManager managerInsertDataWithDataModelArray:dataArray]) {
+                TRSNSLog(@"发送pageEvent数据失败，插入临时表%ld条数据", (unsigned long)dataArray.count);
+            } else {
+                TRSNSLog(@"*****发送失败插入临时表%ld条pageEvent数据失败，数据丢失******", (unsigned long)dataArray.count);
+            }
+            
+        }];
     }
     
 }
@@ -172,7 +188,7 @@
     
     if (kTRSManager.debugEnable) {
         NSArray *debugEventArray = @[event];
-        [kTRSManager sendDebugPageEventWithDataArray:debugEventArray];
+        [kTRSNetworkManager sendDebugDataWithDataArray:debugEventArray];
     } else {
         [kTRSManager.eventModelArray addObject:event];
     }
